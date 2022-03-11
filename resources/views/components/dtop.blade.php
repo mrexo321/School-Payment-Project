@@ -1,4 +1,4 @@
-<div class="flex justify-between text-blue-800 font-semibold items-center">
+<div class="flex justify-between text-blue-800 font-semibold items-center pb-4">
     <div class="name-section bg-blue-800 text-white py-3 px-4 shadow-md rounded-xl">
         {{ $slot }}
     </div>
@@ -10,5 +10,4 @@
             </button>
         </div>
     </form>
-
 </div>

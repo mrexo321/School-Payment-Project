@@ -16,11 +16,10 @@ class StudentFactory extends Factory
         return [
 
             'nisn' => rand(),
-            'nis' => '12345678',
+            'nis' => rand(1,1000),
             'name' => $this->faker->name(),
             'class_id' => rand(1,5),
             'address' => $this->faker->address(),
-            'spp_id' => rand(1,4)
 
         ];
     }

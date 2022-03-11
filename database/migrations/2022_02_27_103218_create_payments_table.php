@@ -16,12 +16,14 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('officer_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('class_id')->constrained('kelas')->cascadeOnDelete();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->date('date_payment');
             $table->string('month_payment' , 8);
             $table->string('year_payment' , 4);
             $table->foreignId('spp_id')->constrained()->cascadeOnDelete();
             $table->integer('total_payment');
+            $table->string('identifier');
             $table->timestamps();
         });
     }

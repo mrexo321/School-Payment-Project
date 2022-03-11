@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="p-5 col-span-3 flex justify-center items-center bg-white rounded-xl">
-            <a class="flex items-center p-2" href="/profile/{{ auth()->user()->identifier }}">
+            <a class="flex items-center p-2" href="{{ route('dashboard.profile' , auth()->user()->identifier) }}">
                 <div class="profile-image pr-4 flex-shrink-0">
                     <img class="rounded-full w-12 h-12"
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"

@@ -59,7 +59,7 @@
                 <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, alias eligendi rerum aliquam repellendus assumenda ipsa culpa nulla quam architecto?</h2>
             </div>
             <div class="copyright capitalize">
-                <h2>trademark licensed Copyright &copy; 2016 - {{ date('Y') }} </h2>
+                <h2>trademark licensed Copyright &copy; 2022- {{ date('Y') }} </h2>
             </div>
         </div>
     </div>

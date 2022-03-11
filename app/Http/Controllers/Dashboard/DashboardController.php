@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Officer;
 use App\Models\Payment;
@@ -16,7 +17,7 @@ class DashboardController extends Controller
     public function index()
     {
         $students = Student::all();
-        $payments = Payment::all();
+        $payments = Payment::whereDate('created_at' , Carbon::today())->get();
         $officers = Officer::all();
         $payments = Payment::all();
         $recentUsers = User::latest()->limit(5)->get();

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Officer;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class OfficerController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +16,10 @@ class OfficerController extends Controller
      */
     public function index()
     {
-        //
         $data = [
-            'officers' => Officer::paginate(3)
+            'payments' =>  Payment::paginate(5)
         ];
-
-        return view('dashboard.officers.index' , $data);
+        return view('dashboard.payments.index' , $data);
     }
 
     /**
@@ -28,10 +27,13 @@ class OfficerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Payment $payment)
     {
 
-        return view('dashboard.officers.create');
+        $data = [
+            'payments' => $payment::all()
+        ];
+        return view('dashboard.payments.create' , $data);
     }
 
     /**
@@ -62,12 +64,13 @@ class OfficerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Officer $officer)
+    public function edit(Payment $payment)
     {
         $data = [
-            'officer' => $officer
+            'payment' => $payment
         ];
-        return view('dashboard.officers.edit' , $data);
+        return view('dashboard.payments.edit' , $data);
+
     }
 
     /**
@@ -77,9 +80,20 @@ class OfficerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'officer_id' => 'required|unique:officers',
+            'student_id' => 'required|unique:students',
+            'date_payments' => 'required',
+            'month_payment' => 'required',
+            'year_payments' => 'required',
+            'spp_id' => 'required|unique:spps',
+            'total' => 'required',
+            'identifier' => 'required'
+        ]);
+
+
     }
 
     /**
@@ -88,10 +102,10 @@ class OfficerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Officer $officer)
+    public function destroy(Payment $payment)
     {
-        Officer::where('username' , $officer->username)->delete();
+        Payment::where('identifier' , $payment->identifier)->delete();
+        Alert::success('Success' , 'Data berhasil dihapus');
         return back();
     }
-
 }

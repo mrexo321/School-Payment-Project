@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Kelas;
-use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class StudentController extends Controller
+class ClassController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +17,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
         $data = [
-            'students' => Student::paginate(5)
+            'classes' => Kelas::paginate(3)
         ];
-        return view('dashboard.students.index' , $data);
+        return view('dashboard.classes.index' , $data);
     }
 
     /**
@@ -31,11 +30,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
-        $data = [
-            'classes' => Kelas::all()
-        ];
-        return view('dashboard.students.create' , $data);
+        return view('dashboard.classes.create');
     }
 
     /**
@@ -46,19 +41,14 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
-
         $validatedData = $request->validate([
-            'nisn' => 'required|unique:students,nisn|max:10',
-            'nis' =>  'required|unique:students,nis|max:8',
-            'name' => 'required',
-            'class_id' => 'required',
-            'address' => 'required',
+            'class_name' => 'required|unique:kelas,class_name',
+            'major' => 'required|unique:kelas,major'
         ]);
-        Student::create($validatedData);
-        Alert::success('Success' , 'Siswa berhasil ditambahkan');
-        return redirect()->intended('dashboard/students');
+
+        Kelas::create($validatedData);
+        Alert::success('Success' , 'Kelas berhasil ditambahkan');
+        return redirect('dashboard/classes');
     }
 
     /**
@@ -78,16 +68,13 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function edit(Kelas $class)
     {
-        //
         $data = [
-            'student' => $student,
-            'classes' => Kelas::all()
+            'class' => $class
         ];
 
-        return view('dashboard.students.edit' , $data);
-
+        return view('dashboard.classes.edit' , $data);
     }
 
     /**
@@ -97,9 +84,28 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request , Kelas $class)
     {
-        //
+        $rules = [
+            'class_name' => 'required',
+            'major' => 'required'
+        ];
+
+
+
+        if($request->class_name != $class->class_name){
+            $validatedData['class_name'] = 'required|unique:kelas';
+        }
+
+        if($request->major != $class->major){
+            $validatedData['major'] = 'required|unique:kelas';
+        }
+
+        $validatedData = $request->validate($rules);
+
+        Kelas::where('class_name', $class->class_name)->update($validatedData);
+        Alert::success('Success' , 'Data berhasil di update');
+        return redirect('dashboard/classes');
     }
 
     /**
@@ -108,9 +114,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy(Kelas $class)
     {
-        Student::where('name' , $student->name)->orWhere('nisn' , $student->nisn)->delete();
+        Kelas::where('class_name' , $class->class_name)->delete();
+        Alert::success('Success' , 'Kelas berhasil dihapus');
         return back();
     }
 }

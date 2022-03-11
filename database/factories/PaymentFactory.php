@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentFactory extends Factory
@@ -21,7 +22,8 @@ class PaymentFactory extends Factory
             'month_payment' => 'february',
             'year_payment' => rand(2021 , 2022),
             'spp_id' => rand(1,3),
-            'total_payment' => rand(200000,300000)
+            'total_payment' => rand(200000,300000),
+            'identifier' => 'P' . Str::random(11)
         ];
     }
 }

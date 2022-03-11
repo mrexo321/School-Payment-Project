@@ -1,4 +1,4 @@
-{{-- @dd($attributes) --}}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class=" bg-blue-100 ">
+<body class="bg-blue-100">
 
     <x-dheader>
 
@@ -26,5 +26,6 @@
     </div>
 
 </body>
+@include('sweetalert::alert')
 
 </html>

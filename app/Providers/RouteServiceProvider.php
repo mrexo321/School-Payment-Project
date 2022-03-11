@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Officer;
+use App\Models\Payment;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +47,18 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('student' , function($student){
             return Student::where('nisn' , $student)->orWhere('name' , $student)->firstOrFail();
+        });
+
+        Route::bind('officer' , function($officer){
+            return Officer::where('username' , $officer)->firstOrFail();
+        });
+
+        Route::bind('class' , function($class){
+            return Kelas::where('class_name' ,  $class)->firstOrFail();
+        });
+
+        Route::bind('payment' , function($payment){
+            return Payment::where('identifier' , $payment)->firstOrFail();
         });
 
         $this->routes(function () {

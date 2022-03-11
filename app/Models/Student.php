@@ -14,7 +14,7 @@ class Student extends Model
         'nis',
         'name',
         'class_id',
-        'address'
+        'address',
     ];
 
 
@@ -25,5 +25,9 @@ class Student extends Model
         return $this->belongsTo(Kelas::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 
 }
